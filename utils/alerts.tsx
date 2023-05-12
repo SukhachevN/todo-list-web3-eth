@@ -23,3 +23,18 @@ export const getRequestAccountError = (error: string) => ({
     ...errorAlertBase,
     description: error,
 });
+
+export const getFetchTodosError = (error: string) => ({
+    ...errorAlertBase,
+    description: `Cant fetch todos. ${error}`,
+});
+
+export const getCreateTodoErrorAlert = (title: string, error: string) => ({
+    ...errorAlertBase,
+    description: `Todo "${title}" was not created. ${error}`,
+});
+
+export const getUpdateTodoErrorAlert = (title: string, error: string) => ({
+    ...errorAlertBase,
+    description: `Todo "${title}" was not updated. ${error}`,
+});

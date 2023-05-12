@@ -62,8 +62,6 @@ export const WorkspaceProvider: FC<PropsWithChildren> = ({ children }) => {
                         method: 'eth_accounts',
                     });
 
-                    console.log(accounts);
-
                     setAccount(accounts[0] ?? null);
                 } catch (error) {
                     if (error instanceof Error) {
