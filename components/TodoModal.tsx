@@ -34,6 +34,9 @@ import { getDateFromTodo, maxDate, minDate } from '@/utils/dateUtils';
 import { TodoStateType, TodoType } from '@/utils/types';
 import {
     getCreateTodoErrorAlert,
+    getDeleteTodoAlert,
+    getDeleteTodoErrorAlert,
+    getUpdateTodoAlert,
     getUpdateTodoErrorAlert,
 } from '@/utils/alerts';
 import { MS_IN_ONE_SEC } from '@/utils/constants';
@@ -44,7 +47,7 @@ type TodoModalType = {
     onClose: () => void;
     setTodos: Updater<TodoType[]>;
     index: number;
-    isWaitingNewTodo: MutableRefObject<boolean>;
+    isWaitingNewTodo?: MutableRefObject<boolean>;
 };
 
 const TodoModal: FC<TodoModalType> = ({
@@ -112,14 +115,14 @@ const TodoModal: FC<TodoModalType> = ({
                             ? Math.trunc(Date.now() / MS_IN_ONE_SEC)
                             : 0,
                     };
-
-                    return todos;
                 });
+
+                toast(getUpdateTodoAlert(title));
             } else {
                 const tx = await contract.createTodo(newTodo);
                 await tx.wait();
 
-                isWaitingNewTodo.current = true;
+                isWaitingNewTodo && (isWaitingNewTodo.current = true);
             }
 
             onClose?.();
@@ -140,7 +143,32 @@ const TodoModal: FC<TodoModalType> = ({
         }
     };
 
-    const onDelete = async () => {};
+    const onDelete = async () => {
+        if (!contract || !todo) return;
+
+        setIsUpdating(true);
+
+        try {
+            const tx = await contract.deleteTodo(todo.id);
+            await tx.wait();
+
+            toast(getDeleteTodoAlert(todo.title));
+
+            setTodos((todos) => {
+                todos.splice(index, 1);
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                const { message } = error;
+
+                const alert = getDeleteTodoErrorAlert(todo.title, message);
+
+                toast(alert);
+            }
+        } finally {
+            setIsUpdating(false);
+        }
+    };
 
     const onChange = ({
         target,

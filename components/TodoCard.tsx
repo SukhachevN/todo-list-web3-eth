@@ -18,13 +18,13 @@ import {
 } from '@chakra-ui/react';
 import { ChangeEvent, FC, memo, useState } from 'react';
 
-import { getDateFromTodo } from '@/utils/dateUtils';
 import { TodoCardType } from '@/utils/types';
+import { MS_IN_ONE_SEC } from '@/utils/constants';
+import { getUpdateTodoAlert, getUpdateTodoErrorAlert } from '@/utils/alerts';
 
 import TodoInfoModal from './TodoInfoModal';
 import TodoModal from './TodoModal';
 import { useWorkspace } from './WorkspaceProvider';
-import { MS_IN_ONE_SEC } from '@/utils/constants';
 
 const TodoCard: FC<TodoCardType> = ({ todo, index, setTodos }) => {
     const {
@@ -61,16 +61,39 @@ const TodoCard: FC<TodoCardType> = ({ todo, index, setTodos }) => {
               ).toLocaleDateString()
             : '';
 
-    const onChange = ({
+    const onChange = async ({
         target: { checked },
     }: ChangeEvent<HTMLInputElement>) => {
-        if (!todo) return;
+        if (!todo || !contract) return;
 
-        const todoState = {
-            ...todo,
-            deadline: getDateFromTodo(todo),
-            isCompleted: checked,
-        };
+        setIsUpdating(true);
+
+        try {
+            const tx = await contract.updateTodo({
+                ...todo,
+                isCompleted: checked,
+            });
+
+            await tx.wait();
+
+            setTodos((todos) => {
+                todos[index] = {
+                    ...todos[index],
+                    isCompleted: checked,
+                    completeDate: checked
+                        ? Math.trunc(Date.now() / MS_IN_ONE_SEC)
+                        : 0,
+                };
+            });
+
+            toast(getUpdateTodoAlert(todo.title));
+        } catch (error) {
+            if (error instanceof Error) {
+                toast(getUpdateTodoErrorAlert(todo.title, error.message));
+            }
+        } finally {
+            setIsUpdating(false);
+        }
     };
 
     return (

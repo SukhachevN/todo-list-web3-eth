@@ -5,6 +5,7 @@ import {
     VStack,
     Text,
     useDisclosure,
+    useToast,
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import type { BigNumber } from 'ethers';
@@ -16,6 +17,7 @@ import { CurrentTodoStateType } from '@/utils/types';
 import TodoModal from './TodoModal';
 import TodoCard from './TodoCard';
 import { useWorkspace } from './WorkspaceProvider';
+import { getCreateTodoAlert } from '@/utils/alerts';
 
 const Main = () => {
     const { account, contract } = useWorkspace();
@@ -30,6 +32,8 @@ const Main = () => {
         index: 0,
         todo: null,
     });
+
+    const toast = useToast();
 
     const handleCreateTodo = () => {
         onOpen();
@@ -57,7 +61,10 @@ const Main = () => {
                         completeDate: 0,
                     });
                 });
+
                 isWaitingNewTodo.current = false;
+
+                toast(getCreateTodoAlert(title));
             }
         };
 
