@@ -2,6 +2,15 @@
 pragma solidity 0.8.18;
 
 contract TodoList {
+    event NewTodo(
+        address indexed creator,
+        uint _todoId,
+        string title,
+        string description,
+        uint32 deadline,
+        uint32 createDate
+    );
+
     struct Todo {
         uint id;
         string title;
@@ -49,13 +58,15 @@ contract TodoList {
             "Cant create todo with empty title"
         );
 
+        uint32 createDate = uint32(block.timestamp);
+
         todos.push(
             Todo(
                 todos.length,
                 _todo.title,
                 _todo.description,
                 _todo.deadline,
-                uint32(block.timestamp),
+                createDate,
                 0,
                 false
             )
@@ -66,6 +77,15 @@ contract TodoList {
         userToStats[msg.sender].created++;
 
         todoToUser[id] = msg.sender;
+
+        emit NewTodo(
+            msg.sender,
+            id,
+            _todo.title,
+            _todo.description,
+            _todo.deadline,
+            createDate
+        );
     }
 
     function updateTodo(UpdateTodo memory _todo) public onlyOwnerOf(_todo.id) {
