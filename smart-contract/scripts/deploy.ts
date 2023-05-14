@@ -1,10 +1,14 @@
 import { ethers } from 'hardhat';
 
 async function main() {
+    const TodoNFT = await ethers.getContractFactory('TodoNFT');
     const TodoList = await ethers.getContractFactory('TodoList');
 
-    const todoList = await TodoList.deploy();
+    const todoNFT = await TodoNFT.deploy();
 
+    const todoList = await TodoList.deploy(todoNFT.address);
+
+    console.log(todoNFT.address);
     console.log(todoList.address);
 }
 

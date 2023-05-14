@@ -188,7 +188,7 @@ const TodoModal: FC<TodoModalType> = ({
             isCompleted: !!todo?.isCompleted,
             deadline: getDateFromTodo(todo),
         });
-    }, [todo]);
+    }, [todo, isOpen]);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
