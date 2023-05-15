@@ -27,13 +27,15 @@ contract TodoNFT is ERC721 {
         string memory _name,
         string memory _description,
         string memory _image
-    ) public {
+    ) public returns (uint) {
         uint newItemId = _tokenIds.current();
 
         _idToNFTData[newItemId] = NFTData(_name, _description, _image);
 
         _safeMint(_account, newItemId);
         _tokenIds.increment();
+
+        return newItemId;
     }
 
     function tokenURI(
@@ -47,9 +49,9 @@ contract TodoNFT is ERC721 {
                 nftData.name,
                 '", "description": "',
                 nftData.description,
-                ', "image": "',
+                '", "image": "',
                 nftData.image,
-                "}"
+                '"}'
             )
         );
 

@@ -13,11 +13,11 @@ import type { BigNumber } from 'ethers';
 import { useTodos } from '@/utils/hooks/useTodos';
 import { emptyTodoArray } from '@/utils/constants';
 import { CurrentTodoStateType } from '@/utils/types';
+import { getCreateTodoAlert } from '@/utils/alerts';
 
 import TodoModal from './TodoModal';
 import TodoCard from './TodoCard';
 import { useWorkspace } from './WorkspaceProvider';
-import { getCreateTodoAlert } from '@/utils/alerts';
 
 const Main = () => {
     const { account, contract } = useWorkspace();
@@ -109,7 +109,7 @@ const Main = () => {
                     : todos.map((todo, index) => (
                           <TodoCard
                               index={index}
-                              key={todo.id.toNumber()}
+                              key={todo.id?.toNumber()}
                               todo={todo}
                               setTodos={setTodos}
                           />

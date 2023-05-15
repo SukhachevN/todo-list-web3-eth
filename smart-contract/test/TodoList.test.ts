@@ -51,7 +51,7 @@ describe('TodoList', () => {
 
         expect(stats.created).to.be.equal(1);
 
-        const balance = await contract.balanceOf(alice.address, 1);
+        const balance = await contract.balanceOf(alice.address);
 
         expect(balance.toNumber()).equals(50);
     });
@@ -85,7 +85,7 @@ describe('TodoList', () => {
 
         expect(stats.completed).to.be.equal(1);
 
-        const balance = await contract.balanceOf(alice.address, 1);
+        const balance = await contract.balanceOf(alice.address);
 
         expect(balance.toNumber()).equals(150);
     });
@@ -107,8 +107,27 @@ describe('TodoList', () => {
 
         expect(stats.deleted).to.be.equal(1);
 
-        const balance = await contract.balanceOf(alice.address, 1);
+        const balance = await contract.balanceOf(alice.address);
 
         expect(balance.toNumber()).equals(0);
+    });
+
+    it('should mint achievement nft', async () => {
+        await contract.createTodo(testTodo);
+
+        let achievementState = await contract.getAchievementsState();
+
+        expect(achievementState.createOneTodo.toNumber()).to.be.equals(0);
+
+        await contract.mintAchievementNFT({
+            actionType: 0,
+            amount: 0,
+        });
+
+        achievementState = await contract.getAchievementsState();
+
+        expect(achievementState.createOneTodo.toNumber()).not.to.be.equals(0);
+
+        await nftFactory.tokenURI(1);
     });
 });

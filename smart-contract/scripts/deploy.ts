@@ -8,8 +8,8 @@ async function main() {
 
     const todoList = await TodoList.deploy(todoNFT.address);
 
-    console.log(todoNFT.address);
-    console.log(todoList.address);
+    console.log('NFT contract adress: ', todoNFT.address);
+    console.log('TodoList contract adress: ', todoList.address);
 }
 
 main().catch((error) => {

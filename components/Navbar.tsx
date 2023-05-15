@@ -1,6 +1,6 @@
 import { Flex, Spacer, Text } from '@chakra-ui/react';
-
 import dynamic from 'next/dynamic';
+
 import { useWorkspace } from './WorkspaceProvider';
 
 const ActiveLink = dynamic(

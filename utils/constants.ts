@@ -1,5 +1,29 @@
-export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTACT_ADDRESS ?? '';
+export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '';
+
+export const NFT_CONTRACT_ADDRESS =
+    process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS ?? '';
+
+export const ETHERSCAN_PREFIX = process.env.NEXT_PUBLIC_ETHERSCAN_PREFIX ?? '';
 
 export const emptyTodoArray = new Array(20).fill(0);
 
 export const MS_IN_ONE_SEC = 1000;
+
+export const ACHIEVEMENTS =
+    'https://gateway.pinata.cloud/ipfs/QmfDMVmNjAjHqe1jTM9hCPAH7LmSUHuxr9fcbun2Qtn4bx';
+
+export const achievementAmountCodes = {
+    1: 0,
+    10: 1,
+    100: 2,
+    1000: 3,
+};
+
+export const achievementActionType = {
+    created: 0,
+    completed: 1,
+    deleted: 2,
+};
+
+export const imgPlaceholder =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAAAXNSR0IArs4c6QAAAqpJREFUeF7t0kENACAQA0FQcv5VQoIG9jcV0Mdm9sycZQp8LrDB+lzU3SsAFghJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1SlYDCQFwEqyOgWLgaQAWElWp2AxkBQAK8nqFCwGkgJgJVmdgsVAUgCsJKtTsBhICoCVZHUKFgNJAbCSrE7BYiApAFaS1ekFwOfMf7jKgqcAAAAASUVORK5CYII=';
