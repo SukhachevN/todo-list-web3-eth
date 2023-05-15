@@ -58,3 +58,23 @@ export const getUpdateTodoAlert = (title: string) => ({
     ...successAlertBase,
     description: `Todo "${title}" successfully updated`,
 });
+
+export const getFetchStatsError = (error: string) => ({
+    ...errorAlertBase,
+    description: `Cant fetch stats. ${error}`,
+});
+
+export const getFetchAchievementsError = (error: string) => ({
+    ...errorAlertBase,
+    description: `Cant fetch achievements. ${error}`,
+});
+
+export const mintAchievementAlert = {
+    ...successAlertBase,
+    description: 'Congratulations! You minted achievement NFT!',
+};
+
+export const getMintAchievementError = (error: string) => ({
+    ...errorAlertBase,
+    description: `Cant mint achievement NFT. ${error}`,
+});

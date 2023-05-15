@@ -1,8 +1,10 @@
-import { assert, expect, should } from 'chai';
+import { expect } from 'chai';
 import { ethers } from 'hardhat';
 
-import { TodoList__factory, TodoList } from '../typechain-types';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { TodoList, TodoList__factory } from '../typechain-types';
+import { TodoNFT } from '../typechain-types/contracts/TodoNFT';
+import { TodoNFT__factory } from '../typechain-types/factories/contracts/TodoNFT__factory';
 
 describe('TodoList', () => {
     const testTodo = {
@@ -23,10 +25,14 @@ describe('TodoList', () => {
     let bob: SignerWithAddress;
 
     let contract: TodoList;
+    let nftFactory: TodoNFT;
 
     beforeEach(async () => {
         [alice, bob] = await ethers.getSigners();
-        contract = await new TodoList__factory(alice).deploy();
+        nftFactory = await new TodoNFT__factory(alice).deploy();
+        contract = await new TodoList__factory(alice).deploy(
+            nftFactory.address
+        );
     });
 
     it('should create todo', async () => {
@@ -44,6 +50,10 @@ describe('TodoList', () => {
         const stats = await contract.getStats();
 
         expect(stats.created).to.be.equal(1);
+
+        const balance = await contract.balanceOf(alice.address);
+
+        expect(balance.toNumber()).equals(50);
     });
 
     it('should not see another user todos', async () => {
@@ -74,6 +84,10 @@ describe('TodoList', () => {
         const stats = await contract.getStats();
 
         expect(stats.completed).to.be.equal(1);
+
+        const balance = await contract.balanceOf(alice.address);
+
+        expect(balance.toNumber()).equals(150);
     });
 
     it('should delete todo', async () => {
@@ -92,5 +106,28 @@ describe('TodoList', () => {
         const stats = await contract.getStats();
 
         expect(stats.deleted).to.be.equal(1);
+
+        const balance = await contract.balanceOf(alice.address);
+
+        expect(balance.toNumber()).equals(0);
+    });
+
+    it('should mint achievement nft', async () => {
+        await contract.createTodo(testTodo);
+
+        let achievementState = await contract.getAchievementsState();
+
+        expect(achievementState.createOneTodo.toNumber()).to.be.equals(0);
+
+        await contract.mintAchievementNFT({
+            actionType: 0,
+            amount: 0,
+        });
+
+        achievementState = await contract.getAchievementsState();
+
+        expect(achievementState.createOneTodo.toNumber()).not.to.be.equals(0);
+
+        await nftFactory.tokenURI(1);
     });
 });

@@ -36,3 +36,33 @@ export type TodoStateType = {
     isCompleted: boolean;
     deadline: string;
 };
+
+export type StatsStateType = {
+    created: BigNumber;
+    completed: BigNumber;
+    deleted: BigNumber;
+};
+
+export type AchievementsStateType = {
+    createOneTodo: BigNumber;
+    completeOneTodo: BigNumber;
+    deleteOneTodo: BigNumber;
+    createTenTodos: BigNumber;
+    completeTenTodos: BigNumber;
+    deleteTenTodos: BigNumber;
+    createHundreedTodos: BigNumber;
+    completeHundreedTodos: BigNumber;
+    deleteHundreedTodos: BigNumber;
+    createThousandTodos: BigNumber;
+    completeThousandTodos: BigNumber;
+    deleteThousandTodos: BigNumber;
+};
+
+export type AchievementsMetadataType = {
+    title: string;
+    description: string;
+    achievementKey: keyof AchievementsStateType;
+    statsStateKey: keyof StatsStateType;
+    amount: 1 | 10 | 100 | 1000;
+    image: string;
+};

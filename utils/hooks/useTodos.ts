@@ -29,7 +29,26 @@ export const useTodos = () => {
         queryKey: ['todos', account],
         queryFn: fetchTodos,
         onSuccess: (fetchedTodos) => {
-            setTodos(fetchedTodos);
+            const todos = fetchedTodos.map((todo) => {
+                if (typeof todo.title === 'string') {
+                    return todo;
+                } else {
+                    return {
+                        ...todo,
+                        id: todo[0],
+                        title: todo[1],
+                        description: todo[2],
+                        deadline: todo[3],
+                        createDate: todo[4],
+                        completeDate: todo[5],
+                        isCompleted: todo[6],
+                    };
+                }
+            });
+
+            todos.sort((a, b) => b.createDate - a.createDate);
+
+            setTodos(todos);
         },
         refetchOnWindowFocus: false,
         enabled: !!(account && contract),
