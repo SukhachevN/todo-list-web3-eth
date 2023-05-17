@@ -5,7 +5,13 @@ import "./TodoListBase.sol";
 import "./TodoListNFT.sol";
 
 contract TodoAiImage is TodoListBase, TodoListNFT {
-    event NewAiImageNFT(address indexed _creator, uint _nftId);
+    event NewAiImageNFT(
+        address indexed _creator,
+        uint _nftId,
+        string name,
+        string description,
+        string image
+    );
 
     struct AiImageState {
         bool isInitialized;
@@ -110,6 +116,12 @@ contract TodoAiImage is TodoListBase, TodoListNFT {
         savedAiImage.image = _args.image;
         savedAiImage.nftId = nftId;
 
-        emit NewAiImageNFT(msg.sender, nftId);
+        emit NewAiImageNFT(
+            msg.sender,
+            nftId,
+            _args.name,
+            _args.description,
+            _args.image
+        );
     }
 }

@@ -59,10 +59,11 @@ const AchievementCard: FC<AchievementCardType> = ({
         try {
             setIsMinting(true);
 
-            await contract.mintAchievementNFT({
+            const tx = await contract.mintAchievementNFT({
                 actionType: achievementActionType[statsStateKey],
                 amount: achievementAmountCodes[amount],
             });
+            await tx.wait();
 
             isWaitingAchievementMint.current = true;
         } catch (error) {
