@@ -130,4 +130,91 @@ describe('TodoList', () => {
 
         await nftFactory.tokenURI(1);
     });
+
+    it('should init AI image state', async () => {
+        await contract.createTodo(testTodo);
+
+        let aiImageState = await contract.getAiImageState();
+
+        expect(aiImageState.tryCount).to.be.equals(0);
+        expect(aiImageState.isInitialized).to.be.equals(false);
+
+        await contract.initializeAiImageState();
+
+        aiImageState = await contract.getAiImageState();
+
+        expect(aiImageState.tryCount).to.be.equals(1);
+        expect(aiImageState.isInitialized).to.be.equals(true);
+    });
+
+    it('should buy AI image tries', async () => {
+        let aiImageState = await contract.getAiImageState();
+
+        expect(aiImageState.tryCount).to.be.equals(0);
+        expect(aiImageState.isInitialized).to.be.equals(false);
+
+        const buyAmount = 10;
+
+        await contract.buyAiImageTry(buyAmount);
+
+        aiImageState = await contract.getAiImageState();
+
+        expect(aiImageState.tryCount).to.be.equals(buyAmount);
+    });
+
+    it('should use AI image try', async () => {
+        let aiImageState = await contract.getAiImageState();
+
+        expect(aiImageState.tryCount).to.be.equals(0);
+        expect(aiImageState.isInitialized).to.be.equals(false);
+
+        const buyAmount = 10;
+
+        await contract.buyAiImageTry(buyAmount);
+        await contract.useAiImageTry();
+
+        aiImageState = await contract.getAiImageState();
+
+        expect(aiImageState.tryCount).to.be.equals(buyAmount - 1);
+    });
+
+    it('should save AI image', async () => {
+        let savedAiImage = await contract.getSavedAiImage();
+
+        const testAiImage = {
+            name: 'test name',
+            description: 'test description',
+            image: 'test image',
+        };
+
+        expect(savedAiImage.name).to.be.equals('');
+        expect(savedAiImage.description).to.be.equals('');
+        expect(savedAiImage.image).to.be.equals('');
+
+        await contract.saveAiImage(testAiImage);
+
+        savedAiImage = await contract.getSavedAiImage();
+
+        expect(savedAiImage.name).to.be.equals(testAiImage.name);
+        expect(savedAiImage.description).to.be.equals(testAiImage.description);
+        expect(savedAiImage.image).to.be.equals(testAiImage.image);
+    });
+
+    it('should mint AI image NFT', async () => {
+        let savedAiImage = await contract.getSavedAiImage();
+
+        const testAiImage = {
+            name: 'test name',
+            description: 'test description',
+            image: 'test image',
+        };
+
+        expect(savedAiImage.nftId).to.be.equals(0);
+
+        await contract.mintAiImageNFT(testAiImage);
+
+        savedAiImage = await contract.getSavedAiImage();
+
+        expect(savedAiImage.nftId).not.to.be.equals(0);
+    });
 });

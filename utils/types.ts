@@ -1,5 +1,6 @@
 import { Updater } from 'use-immer';
 import type { BigNumber } from 'ethers';
+import { Dispatch, SetStateAction } from 'react';
 
 export type TodoType = {
     id: BigNumber;
@@ -65,4 +66,23 @@ export type AchievementsMetadataType = {
     statsStateKey: keyof StatsStateType;
     amount: 1 | 10 | 100 | 1000;
     image: string;
+};
+
+export type AiImageStateType = {
+    isInitialized: boolean;
+    tryCount: number;
+};
+
+export type AiImageGeneratorElementType = {
+    balance: number;
+    aiImageState: AiImageStateType;
+    setBalance: Dispatch<SetStateAction<number>>;
+    setAiImageState: Dispatch<SetStateAction<AiImageStateType>>;
+};
+
+export type SavedAiImageType = {
+    name: string;
+    description: string;
+    image: string;
+    nftId: number;
 };

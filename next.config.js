@@ -3,7 +3,7 @@ const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
     images: {
-        domains: ['arweave.net'],
+        domains: ['arweave.net', 'gateway.pinata.cloud'],
     },
 };
 
