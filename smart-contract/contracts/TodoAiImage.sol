@@ -57,9 +57,9 @@ contract TodoAiImage is TodoListBase, TodoListNFT {
         require(amount > 0, "Cant buy zero tries");
 
         // For testing
-        uint priceToPay = 0;
+        // uint priceToPay = 0;
         // For prod
-        // uint priceToPay = amount * _aiImageTryPrice;
+        uint priceToPay = amount * _aiImageTryPrice;
         uint balance = balanceOf(msg.sender);
 
         require(balance >= priceToPay, "Not enough tokens to buy tries");
@@ -95,12 +95,12 @@ contract TodoAiImage is TodoListBase, TodoListNFT {
         uint balance = balanceOf(msg.sender);
 
         // Comment for testing
-        // require(
-        //     balance >= _mintAiImageNftPrice,
-        //     "Not enough tokens to mint NFT"
-        // );
-
-        // _burn(msg.sender, _mintAiImageNftPrice);
+        require(
+            balance >= _mintAiImageNftPrice,
+            "Not enough tokens to mint NFT"
+        );
+        // Comment for testing
+        _burn(msg.sender, _mintAiImageNftPrice);
 
         uint nftId = todoNFT.mintNFT(
             msg.sender,
