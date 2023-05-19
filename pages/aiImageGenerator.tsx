@@ -6,11 +6,15 @@ import MainLayout from '@/components/MainLayout';
 import AiImageGenerator from '@/components/AiImageGenerator';
 
 const AiImageGeneratorPage: NextPage = () => {
-    const { account } = useWorkspace();
+    const { account, isChainIdCorrect } = useWorkspace();
 
     return (
         <MainLayout>
-            {account ? <AiImageGenerator /> : <Disconnected />}
+            {account && isChainIdCorrect ? (
+                <AiImageGenerator />
+            ) : (
+                <Disconnected />
+            )}
         </MainLayout>
     );
 };

@@ -12,6 +12,8 @@ export const PINATA_API_KEY = process.env.NEXT_PUBLIC_PINATA_API_KEY ?? '';
 export const PINATA_SECRET_API_KEY =
     process.env.NEXT_PUBLIC_PINATA_API_SECRET ?? '';
 
+export const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID ?? '';
+
 export const emptyTodoArray = new Array(20).fill(0);
 
 export const MS_IN_ONE_SEC = 1000;
