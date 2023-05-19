@@ -102,7 +102,11 @@ const TriesCount: FC<AiImageGeneratorElementType> = ({
                         </NumberInputStepper>
                     </NumberInput>
                     <Tooltip label={`1 try = ${AI_IMAGE_TRY_PRICE} $TODO`}>
-                        <Button isLoading={isLoading} onClick={buyMoreTries}>
+                        <Button
+                            isLoading={isLoading}
+                            onClick={buyMoreTries}
+                            isDisabled={balance < AI_IMAGE_TRY_PRICE * amount}
+                        >
                             Buy
                         </Button>
                     </Tooltip>

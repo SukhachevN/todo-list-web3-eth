@@ -51,7 +51,7 @@ const Main = () => {
         ) => {
             if (creator.toLowerCase() === account && isWaitingNewTodo.current) {
                 setTodos((todos) => {
-                    todos.push({
+                    todos.unshift({
                         id,
                         title,
                         description,
@@ -78,7 +78,12 @@ const Main = () => {
     return (
         <VStack spacing={10} h="100%">
             <HStack alignItems="flex-start" p="20px">
-                <Button onClick={handleCreateTodo}>Create todo</Button>
+                <Button
+                    onClick={handleCreateTodo}
+                    isLoading={isWaitingNewTodo.current}
+                >
+                    Create todo
+                </Button>
                 <TodoModal
                     index={currentTodo.index}
                     isOpen={isOpen}
@@ -109,7 +114,7 @@ const Main = () => {
                     : todos.map((todo, index) => (
                           <TodoCard
                               index={index}
-                              key={todo.id?.toNumber()}
+                              key={todo?.id?.toNumber() ?? index}
                               todo={todo}
                               setTodos={setTodos}
                           />

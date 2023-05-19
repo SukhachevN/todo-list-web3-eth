@@ -113,10 +113,10 @@ const SaveAiImageModal: FC<SaveAiImageModalType> = ({
         if (!contract) return;
 
         // comment for testing
-        // if (balance < GENERATE_AI_IMAGE_NFT_PRICE) {
-        //     toast(notEnoughTodoTokensError);
-        //     return;
-        // }
+        if (balance < GENERATE_AI_IMAGE_NFT_PRICE) {
+            toast(notEnoughTodoTokensError);
+            return;
+        }
 
         try {
             setIsLoading(true);

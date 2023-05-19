@@ -103,6 +103,7 @@ const AiImage: FC<AiImageGeneratorElementType> = ({
         if (!contract) return;
 
         try {
+            setIsGenerating(true);
             const tx = await contract.useAiImageTry();
             await tx.wait();
 
@@ -115,6 +116,7 @@ const AiImage: FC<AiImageGeneratorElementType> = ({
             if (error instanceof Error) {
                 toast(getUseGeneratorTryError(error.message));
             }
+            setIsGenerating(false);
         }
     };
 
