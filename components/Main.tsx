@@ -80,7 +80,7 @@ const Main = () => {
             <HStack alignItems="flex-start" p="20px">
                 <Button
                     onClick={handleCreateTodo}
-                    disabled={isWaitingNewTodo.current}
+                    isLoading={isWaitingNewTodo.current}
                 >
                     Create todo
                 </Button>
