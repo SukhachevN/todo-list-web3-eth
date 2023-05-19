@@ -1,8 +1,11 @@
 import { Button, Text, VStack, useToast } from '@chakra-ui/react';
 
 import { getRequestAccountError, noMetaMaskError } from '@/utils/alerts';
+import { useWorkspace } from './WorkspaceProvider';
 
 const Disconnected = () => {
+    const { isChainIdCorrect, switchChain } = useWorkspace();
+
     const toast = useToast();
 
     const onClick = async () => {
@@ -13,6 +16,8 @@ const Disconnected = () => {
                 await ethereum.request({
                     method: 'eth_requestAccounts',
                 });
+
+                !isChainIdCorrect && switchChain?.();
             } catch (error) {
                 if (error instanceof Error) {
                     toast(getRequestAccountError(error.message));

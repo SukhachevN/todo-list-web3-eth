@@ -144,3 +144,13 @@ export const mintAImageNftAlert = {
     ...successAlertBase,
     description: 'Congratulations! You minted  AI image NFT!',
 };
+
+export const getLoadContractError = (error: string) => ({
+    ...errorAlertBase,
+    description: `Cant load contract. ${error}`,
+});
+
+export const getSwitchChainError = (error: string) => ({
+    ...errorAlertBase,
+    description: `Cant switch chain. ${error}`,
+});

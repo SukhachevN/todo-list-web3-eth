@@ -6,9 +6,13 @@ import Stats from '@/components/Stats';
 import { useWorkspace } from '@/components/WorkspaceProvider';
 
 const StatsPage: NextPage = () => {
-    const { account } = useWorkspace();
+    const { account, isChainIdCorrect } = useWorkspace();
 
-    return <MainLayout> {account ? <Stats /> : <Disconnected />}</MainLayout>;
+    return (
+        <MainLayout>
+            {account && isChainIdCorrect ? <Stats /> : <Disconnected />}
+        </MainLayout>
+    );
 };
 
 export default StatsPage;

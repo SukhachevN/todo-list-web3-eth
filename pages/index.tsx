@@ -6,9 +6,13 @@ import MainLayout from '@/components/MainLayout';
 import Main from '@/components/Main';
 
 const MainPage: NextPage = () => {
-    const { account } = useWorkspace();
+    const { account, isChainIdCorrect } = useWorkspace();
 
-    return <MainLayout> {account ? <Main /> : <Disconnected />}</MainLayout>;
+    return (
+        <MainLayout>
+            {account && isChainIdCorrect ? <Main /> : <Disconnected />}
+        </MainLayout>
+    );
 };
 
 export default MainPage;
