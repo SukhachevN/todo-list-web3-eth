@@ -1,7 +1,7 @@
 import { Box, Text, Divider } from '@chakra-ui/react';
 
 import StatsInfo from './info';
-import Achievements from '@/components/Achievements';
+import Achievements from './achievements';
 import { useStats } from '../model';
 
 const Stats = () => {
